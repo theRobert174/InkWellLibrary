@@ -1,0 +1,7 @@
+{
+  "name": "InkWellLibrary",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
