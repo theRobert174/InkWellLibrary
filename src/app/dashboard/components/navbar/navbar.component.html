@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-img src="./../../../../assets/LOGO1-lite.png" alt="InkWellLibrary"/>
+    <ion-buttons slot="end">
+      <ion-button (click)="true">Inicio</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="true">Nuevo</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="true">Info</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button id="userButton" (click)="true">
+        <ion-icon name="person"></ion-icon>
+      </ion-button>
+      <ion-popover trigger="userButton" triggerAction="click" [dismissOnSelect]="true">
+        <ng-template>
+          <ion-content>
+            <ion-content>
+              <ion-list>
+                <ion-item [button]="true" [detail]="false">Perfil</ion-item>
+                <ion-item [button]="true" [detail]="false" [routerLink]="['/auth/login']">Cerrar Sesion</ion-item>
+                <ion-item [button]="true" id="nested-trigger">Mas opciones...</ion-item>
+
+                <ion-popover trigger="nested-trigger" [dismissOnSelect]="true" side="end">
+                  <ng-template>
+                    <ion-content>
+                      <ion-list>
+                        <ion-item [button]="true" [detail]="false">Mas proximamente...</ion-item>
+                      </ion-list>
+                    </ion-content>
+                  </ng-template>
+                </ion-popover>
+              </ion-list>
+            </ion-content>
+          </ion-content>
+        </ng-template>
+      </ion-popover>
+
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -6,6 +8,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent  implements OnInit {
+
+  private router = inject(Router);
+  // private router = inject(NavController);
 
   // the username and password variables to hold the input data
  public username: string = '';
@@ -26,6 +31,11 @@ export class LoginComponent  implements OnInit {
 
  onClick(){
 
+ }
+
+ login(){
+  // this.router.navigateRoot('/dashboard')
+  this.router.navigate(['/dashboard'])
  }
 
 }

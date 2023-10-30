@@ -6,7 +6,10 @@ import { LayoutDashboardPage } from './layout-dashboard.page';
 const routes: Routes = [
   {
     path: '',
-    component: LayoutDashboardPage
+    component: LayoutDashboardPage,
+    children: [
+
+    ]
   }
 ];
 
