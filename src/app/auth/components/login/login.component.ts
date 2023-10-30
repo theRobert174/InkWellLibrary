@@ -1,6 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { AuthService } from '../../services/auth.service';
+import { LogData } from '../../interfaces';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -10,32 +12,51 @@ import { NavController } from '@ionic/angular';
 export class LoginComponent  implements OnInit {
 
   private router = inject(Router);
-  // private router = inject(NavController);
+  private auth = inject(AuthService);
+  private fb : FormBuilder = inject(FormBuilder);
 
-  // the username and password variables to hold the input data
- public username: string = '';
- public password: string = '';
+  public myForm : FormGroup = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]]
+  });
 
- // whether or not to use the browser's native password manager
- public enablePasswordManager: boolean = true;
+
+  // public username: string = '';
+  // public password: string = '';
+
+  public enablePasswordManager: boolean = true;
 
   constructor() { }
 
   ngOnInit() {}
 
   togglePasswordVisibility() {
-    // toggle the password input type between "text" and "password"
     const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
     passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
- }
+  }
 
- onClick(){
+  onSubmit(){
+    if(this.myForm.invalid) { alert('Datos incorrectos'); }
+    else {
+      let email = this.myForm.controls['email'].value;
+      let password = this.myForm.controls['password'].value;
 
- }
+      this.login( {email, password} );
+    }
+  }
 
- login(){
-  // this.router.navigateRoot('/dashboard')
-  this.router.navigate(['/dashboard'])
- }
+  async login( logData : LogData ){
+
+    let acceso = await this.auth.login( logData );
+    console.log('Accesso: ', acceso);
+    if( acceso! ) { this.router.navigate(['/dashboard']); }
+    else { console.log('El servicio fue nulo'); alert('Datos incorrectos'); }
+  }
+
+  async google(){
+    let acceso = await this.auth.loginWithGoogle();
+    if(acceso){ this.router.navigate(['/dashboard']); }
+    else { console.log('El servicio fue nulo'); alert('Datos incorrectos'); }
+  }
 
 }

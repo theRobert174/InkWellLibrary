@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LogData } from '../../interfaces';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -7,14 +11,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterComponent  implements OnInit {
 
-    // the username and password variables to hold the input data
-  public name: string = '';
-  public lastName: string = '';
-  public username: string = '';
-  public email: string = '';
-  public password: string = '';
+  private router = inject(Router)
+  private auth  = inject(AuthService);
+  private fb : FormBuilder = inject(FormBuilder);
 
-  // whether or not to use the browser's native password manager
+  public myForm : FormGroup = this.fb.group({
+    name: ['', [Validators.required, Validators.minLength(3)] ],
+    lastName: ['', [Validators.required, Validators.minLength(3)] ],
+    userName: ['', [Validators.required, Validators.minLength(3)] ],
+    email: ['', [Validators.required, Validators.email] ],
+    password: ['', [Validators.required, Validators.minLength(8)] ],
+  });
+
   public enablePasswordManager: boolean = true;
 
   constructor() { }
@@ -27,8 +35,27 @@ export class RegisterComponent  implements OnInit {
     passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
  }
 
- onClick(){
+ onSubmit(){
+  if(this.myForm.invalid) { alert('Datos incorrectos'); }
+  else {
+    let email = this.myForm.controls['email'].value;
+    let password = this.myForm.controls['password'].value;
 
+    this.register( {email, password} );
+  }
+ }
+
+ async register( logdata: LogData){
+  let acceso = await this.auth.register(logdata);
+  console.log('Acceso: ', acceso);
+  if(acceso!) { this.router.navigate(['/dashboard']); }
+  else { console.log('El servicio fue nulo'); alert('Datos incorrectos'); }
+ }
+
+ async google(){
+  let acceso = await this.auth.loginWithGoogle();
+  if(acceso){ this.router.navigate(['/dashboard']); }
+  else { console.log('El servicio fue nulo'); alert('Datos incorrectos'); }
  }
 
 }
