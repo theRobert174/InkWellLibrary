@@ -9,6 +9,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
 import { ControlPageButtonsComponent } from './control-page-buttons/control-page-buttons.component';
+import { ProfileModalComponent } from './profile-modal/profile-modal.component';
 
 
 
@@ -17,7 +18,8 @@ import { ControlPageButtonsComponent } from './control-page-buttons/control-page
     FooterComponent,
     NavbarComponent,
     BookPageComponent,
-    ControlPageButtonsComponent
+    ControlPageButtonsComponent,
+    ProfileModalComponent
   ],
   imports: [
     CommonModule,

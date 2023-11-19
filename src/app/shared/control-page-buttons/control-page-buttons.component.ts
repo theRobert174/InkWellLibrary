@@ -18,24 +18,24 @@ export class ControlPageButtonsComponent  implements OnInit {
 
   nextPage(){
     this.currentPage.update( p => p+1 );
-    console.log('nextPage', this.currentPage());
+    // console.log('nextPage', this.currentPage());
     if(this.currentPage() > this.totalPages) this.currentPage.update( p => p-1 );
     else {
       // this.currentPage.update( p => p+1 );
       this.currentPageSent.emit(this.currentPage());
     }
-    console.log('nextPage', this.currentPage());
+    // console.log('nextPage', this.currentPage());
   }
 
   previousPage() {
     this.currentPage.update( p => p-1 );
-    console.log('previousPage', this.currentPage());
+    // console.log('previousPage', this.currentPage());
     if(this.currentPage() <= 0) this.currentPage.set(1);
     else {
       // this.currentPage.update( p => p-1 );
       this.currentPageSent.emit(this.currentPage());
     }
-    console.log('previousPage', this.currentPage());
+    // console.log('previousPage', this.currentPage());
   }
 
 }

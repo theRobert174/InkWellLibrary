@@ -1,0 +1,30 @@
+.container {
+  text-align: center;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  justify-items: center;
+}
+
+ion-avatar , img,
+ion-thumbnail, .container-div{
+  width: 150px;
+  height: 150px;
+}
+
+.avatar-container,
+.thumbnail-container {
+  position: relative;
+}
+
+.editableImage, .container-div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white; /* Puedes ajustar el color según tus necesidades */
+  font-size: 24px; /* Ajusta el tamaño del ícono según tus necesidades */
+}
+input[type="file"] {
+  display: none;
+}

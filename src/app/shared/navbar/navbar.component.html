@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-img src="./../../../../assets/LOGO1-lite.png" alt="InkWellLibrary"/>
+    <ion-img class="logo" src="./../../../../assets/LOGO1-lite.png" alt="InkWellLibrary"/>
     <ion-buttons slot="end">
       <ion-button (click)="true">Inicio</ion-button>
     </ion-buttons>
@@ -11,16 +11,24 @@
       <ion-button (click)="true">Info</ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button id="userButton" (click)="true">
-        <ion-icon name="person"></ion-icon>
+      <ion-button id="userButton">
+        <ion-avatar>
+          <ion-img *ngIf="userData().photoURL" [src]="userData().photoURL"></ion-img>
+          <ion-icon *ngIf="!userData().photoURL" name="person"></ion-icon>
+        </ion-avatar>
       </ion-button>
+      <!-- <ion-button id="userButton" (click)="true">
+        <ion-img *ngIf="userData().photoURL" [src]="userData().photoURL"/>
+        <ion-icon *ngIf="!userData().photoURL" name="person"></ion-icon>
+      </ion-button> -->
       <ion-popover trigger="userButton" triggerAction="click" [dismissOnSelect]="true">
         <ng-template>
           <ion-content>
             <ion-content>
               <ion-list>
-                <ion-item [button]="true" [detail]="false">Perfil</ion-item>
-                <ion-item [button]="true" [detail]="false" [routerLink]="['/auth/login']">Cerrar Sesion</ion-item>
+                <ion-item [button]="true" [detail]="false" (click)="openModal()">Perfil</ion-item>
+                <!-- <ion-item [button]="true" [detail]="false" [routerLink]="['/auth/login']">Cerrar Sesion</ion-item> -->
+                <ion-item [button]="true" [detail]="false" (click)="logout()">Cerrar Sesion</ion-item>
                 <ion-item [button]="true" id="nested-trigger">Mas opciones...</ion-item>
 
                 <ion-popover trigger="nested-trigger" [dismissOnSelect]="true" side="end">

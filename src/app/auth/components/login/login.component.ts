@@ -1,6 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+// import { AuthService } from '../../services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
+
 import { LogData } from '../../interfaces';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -45,18 +47,25 @@ export class LoginComponent  implements OnInit {
     }
   }
 
-  async login( logData : LogData ){
+  login( logData : LogData ){
 
-    let acceso = await this.auth.login( logData );
-    console.log('Accesso: ', acceso);
-    if( acceso! ) { this.router.navigate(['/dashboard']); }
-    else { console.log('El servicio fue nulo'); alert('Datos incorrectos'); }
+    // let acceso = await this.auth.login( logData );
+    // console.log('Accesso: ', acceso);
+    this.auth.login( logData ).subscribe({
+      next: () => this.router.navigateByUrl('/dashboard'),
+      error: () => { console.log('El servicio fue nulo'); alert('Datos incorrectos'); }
+    });
+    // if( acceso! ) { this.router.navigate(['/dashboard']); }
+    // else { console.log('El servicio fue nulo'); alert('Datos incorrectos'); }
   }
 
-  async google(){
-    let acceso = await this.auth.loginWithGoogle();
-    if(acceso){ this.router.navigate(['/dashboard']); }
-    else { console.log('El servicio fue nulo'); alert('Datos incorrectos'); }
+  google(){
+    this.auth.loginWithGoogle().subscribe({
+      next: () => this.router.navigateByUrl('/dashboard'),
+      error: () => { console.log('El servicio fue nulo'); alert('Datos incorrectos'); }
+    });
+    // if(acceso){ this.router.navigate(['/dashboard']); }
+    // else { console.log('El servicio fue nulo'); alert('Datos incorrectos'); }
   }
 
 }
